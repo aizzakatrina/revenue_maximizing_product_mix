@@ -1,4 +1,4 @@
-# revenue_maximizing_product_mix
+# Revenue Maximizing Product Mix
 
 Since Hex.tech has removed sharing projects in Notebook View, the logic for this Hex project is shared here in YAML.
 
