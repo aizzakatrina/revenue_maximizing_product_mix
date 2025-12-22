@@ -1,0 +1,3956 @@
+schemaVersion: 3
+meta:
+  sourceVersionId: 019b449e-b201-7005-9caa-864ef0269e4a # DO NOT CHANGE - Hex uses this to match up project versions when reimporting the file
+  description: An analysis of an equipment rental company's rental and asset data. The goal of the analysis is to find the optimal product mix that results in the highest revenue in each market.
+  projectId: e3408441-0096-4abd-8236-a9b9afce6e3c # DO NOT CHANGE - Unique ID of the project from which this file was generated
+  title: Revenue Maximizing Product Mix
+  timezone: null
+  appTheme: SYS_PREF
+  codeLanguage: PYTHON
+  status:
+    name: Exploratory
+  categories:
+    - name: External
+  castDecimalsDefault: true
+  hexType: PROJECT
+  allowExecutionReordering: true
+  prerunApp: false
+  autoRerunApp: true
+  cachePublishedAppState: true
+  logicQueryCacheTimeout: null
+  publishedQueryCacheTimeout:
+    type: disabled
+  refreshStalePublishedApp: null
+projectAssets:
+  dataConnections: []
+  envVars: []
+  secrets: []
+sharedAssets:
+  secrets: []
+  vcsPackages: []
+  dataConnections:
+    - dataConnectionId: b1b711a7-3eca-40f8-9813-371b8006565f # [Demo] Hex Public Data (snowflake)
+  externalFileIntegrations: []
+cells:
+  - cellType: TEXT
+    cellId: 28b5bb77-c2f9-44bc-9813-b31b41ea4dc6 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: An analysis of an equipment rental company's rental and asset data. The goal of the analysis is to find the optimal product mix that results in the highest revenue in each market.
+  - cellType: TEXT
+    cellId: 18c688d2-1fbf-4388-ad26-fad6605d7317 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h1
+          children:
+            - text: Data
+  - cellType: TEXT
+    cellId: dd3ff613-e1b4-4618-a7f4-569490415a28 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h3
+          children:
+            - text: Metadata
+  - cellType: TEXT
+    cellId: a9d838a3-decb-4230-bc85-21de6c62e4cf # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: "asset_id:  Unique ID tied to an asset."
+        - type: paragraph
+          children:
+            - text: "market_id:  Unique ID for a market. Maps to market_id in market_mapping data set."
+        - type: paragraph
+          children:
+            - text: "acquisition_dat :  Month the asset went into the company's fleet. This is the month where you can start using OEC in the denominator for financial utilization."
+        - type: paragraph
+          children:
+            - text: 'equipment_class:  Dirt" or "Aerial" classification for type of equipment. "Aerial" includes aerial lifts, telehandlers, and other types of lifts. "Dirt" include excavators, skid steers, trenching equipment, and other smaller assets.'
+        - type: paragraph
+          children:
+            - text: 'oec: "Original Equipment Cost" or purchase price of the asset.'
+        - type: paragraph
+          children:
+            - text: "rental_month: Month when the rental occured."
+        - type: paragraph
+          children:
+            - text: "rental_id: Unique identifier for a rental. Rentals can span multiple months so the rental_id field can be repeated in the data set."
+        - type: paragraph
+          children:
+            - text: "asset_id: Unique ID tied to an asset"
+        - type: paragraph
+          children:
+            - text: "market_id: Unique ID for a market. Maps to market_id in market_mapping data set."
+        - type: paragraph
+          children:
+            - text: "rental_revenue: Revenue generated for the given month from the rental."
+        - type: paragraph
+          children:
+            - text: "market_id: Unique ID for a market."
+        - type: paragraph
+          children:
+            - text: "market_name: Location of the market. This has been changed for confidentiality reasons so geographical distribution should not be considered in analysis."
+        - type: paragraph
+          children:
+            - text: "market_open_date: Date the market was opened. It is possible for a rental to occur in a market before it was open, but for market performance analysis this is the earliest date for which we want to analyze the market."
+  - cellType: SQL
+    cellId: 73f3563d-0a5c-4a5c-92c1-1118834d16b0 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Assets
+    config:
+      source: SELECT * FROM "assets.csv";
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: assets
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: acquisition_date
+            renameTo: null
+            size: 144
+            wrapText: null
+            displayFormat: null
+          - originalName: asset_id
+            renameTo: null
+            size: 101
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_id
+            renameTo: null
+            size: 110
+            wrapText: null
+            displayFormat: null
+          - originalName: oec
+            renameTo: null
+            size: 75
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: SQL
+    cellId: 2947047f-835d-4e35-9185-b61baa1020a0 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Markets
+    config:
+      source: select * from "markets.csv";
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: markets
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: market_id
+            renameTo: null
+            size: 110
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: market_open_date
+            renameTo: null
+            size: 157
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 39
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: SQL
+    cellId: 17e0c3cc-1005-414b-b533-b4b79270be9a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Rentals
+    config:
+      source: select * from "rentals.csv";
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: rentals
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: asset_id
+            renameTo: null
+            size: 101
+            wrapText: null
+            displayFormat: null
+          - originalName: market_id
+            renameTo: null
+            size: 110
+            wrapText: null
+            displayFormat: null
+          - originalName: rental_date
+            renameTo: null
+            size: 117
+            wrapText: null
+            displayFormat: null
+          - originalName: rental_id
+            renameTo: null
+            size: 103
+            wrapText: null
+            displayFormat: null
+          - originalName: rental_revenue
+            renameTo: null
+            size: 137
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: TEXT
+    cellId: 15b387d3-f226-4668-b90f-81fc8ce731fb # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h1
+          children:
+            - text: "Preprocess "
+  - cellType: CODE
+    cellId: 1fb5c3d1-d8f2-401a-b5db-ba2c64081af6 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        # dependencies 
+        import pandas as pd
+  - cellType: TEXT
+    cellId: 27c661cb-79f0-4c45-9361-17a8f9521a45 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: "Data quality issue:"
+        - type: paragraph
+          children:
+            - text: Some market IDs do not match for the same equipment on the assets and rentals tables.
+        - type: paragraph
+          children:
+            - text: Those market IDs that do not match are not found in the market table.
+  - cellType: SQL
+    cellId: b9a0bb9e-c952-49f4-b60f-67ba715e51f6 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Data quality asset markets
+    config:
+      source: |-
+        SELECT DISTINCT a.market_id, market_name 
+        FROM assets a 
+        LEFT JOIN markets m ON a.market_id = m.market_id
+        GROUP BY 1, 2
+        HAVING market_name IS NULL;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: data_quality_asset_markets
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: market_id
+            renameTo: null
+            size: 110
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CODE
+    cellId: 8e6dd4a0-55c5-48d1-a28a-d071849b9a65 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: rentals.dtypes
+  - cellType: CODE
+    cellId: 57ece1ce-ca21-4a92-9e4d-caa935553747 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: assets.dtypes
+  - cellType: CODE
+    cellId: b8c3a878-b245-4d46-aa71-7d95833d6628 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        # missing asset data
+        total_a = assets.isnull().sum().sort_values(ascending=False)
+        percent_a = (assets.isnull().sum()/assets.isnull().count()).sort_values(ascending=False)
+        missing_data_a = pd.concat([total_a, percent_a], axis = 1, keys=["total", "percent"])
+        missing_data_a
+  - cellType: CODE
+    cellId: cbb685aa-409b-44c4-bc1b-4d76185b3b7f # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        # missing rental data
+        total_r = rentals.isnull().sum().sort_values(ascending=False)
+        percent_r = (rentals.isnull().sum()/rentals.isnull().count()).sort_values(ascending=False)
+        missing_data_r = pd.concat([total_r, percent_r], axis = 1, keys=["total", "percent"])
+        missing_data_r
+  - cellType: SQL
+    cellId: c303fddd-7903-421f-bfb7-be23176c5b1b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Asset detail
+    config:
+      source: |-
+        -- individual asset detail, total reveunue and oec per asset
+        SELECT
+            a.asset_id,
+            r.market_id,
+            market_name,
+            equipment_class,
+            MAX(oec) AS oec,
+            ROUND(SUM(rental_revenue), 2) AS total_revenue
+        FROM assets AS a
+        LEFT JOIN rentals AS r ON r.asset_id = a.asset_id
+        LEFT JOIN markets AS m ON r.market_id = m.market_id
+        GROUP BY 1, 2, 3, 4;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: asset_detail
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: aquisition_cost
+            renameTo: null
+            size: 136
+            wrapText: null
+            displayFormat: null
+          - originalName: asset_financial_utilization
+            renameTo: null
+            size: 195
+            wrapText: null
+            displayFormat: null
+          - originalName: asset_id
+            renameTo: null
+            size: 101
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_id
+            renameTo: null
+            size: 110
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: oec
+            renameTo: null
+            size: 75
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: SQL
+    cellId: 476d80b2-b34d-48be-9da6-b7fce7d9bb30 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Rentals total revenue
+    config:
+      source: |-
+        -- reconcile total revenue
+        SELECT SUM(rental_revenue) FROM rentals;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: rentals_total_revenue
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: SQL
+    cellId: 90fced2a-1d75-48d5-8d6f-88ab6dc6754f # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Asset revenue total
+    config:
+      source: |-
+        -- reconcile total revenue
+        SELECT SUM(total_revenue) FROM asset_detail;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: asset_revenue_total
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: SQL
+    cellId: 7d8d6b1d-1536-4ae7-8802-8e912f60ee95 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        -- review monthly revenue for a random rental contract
+        SELECT rental_id, rental_date, asset_id, rental_revenue FROM rentals
+        WHERE rental_id = 1862;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: dataframe_4
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: asset_id
+            renameTo: null
+            size: 101
+            wrapText: null
+            displayFormat: null
+          - originalName: rental_date
+            renameTo: null
+            size: 117
+            wrapText: null
+            displayFormat: null
+          - originalName: rental_id
+            renameTo: null
+            size: 103
+            wrapText: null
+            displayFormat: null
+          - originalName: rental_revenue
+            renameTo: null
+            size: 137
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: SQL
+    cellId: 3ee5f7b4-8763-4c35-8ae2-7c04e6ca0413 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        -- Review start and end of time period of data
+        SELECT MIN(rental_date) AS beginning_period, MAX(rental_date) AS ending_perid FROM rentals;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: dataframe_5
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: SQL
+    cellId: 6192d8f8-5388-43e5-aa0a-a504ada13a54 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Rental contract details
+    config:
+      source: |-
+        --total revenue and months rented per rental contract
+        SELECT
+            rental_id,
+            r.asset_id,
+            equipment_class,
+            market_name,
+            ROUND(SUM(rental_revenue),2) as total_revenue,
+            MAX(oec) as asset_cost,
+            MIN(rental_date) AS start_date,
+            MAX(rental_date) AS end_date,
+            (end_date - start_date) + 1 AS total_months_rented,
+            ROUND(total_revenue/total_months_rented, 2) AS average_monthly_revenue
+        FROM rentals r
+        LEFT JOIN assets a ON r.asset_id = a.asset_id
+        LEFT JOIN markets m ON r.market_id = m.market_id
+        GROUP BY 1, 2, 3, 4
+        ORDER BY 1, 2, 3, 4 ASC;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: rental_contract_details
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: asset_cost
+            renameTo: null
+            size: 113
+            wrapText: null
+            displayFormat: null
+          - originalName: asset_id
+            renameTo: null
+            size: 101
+            wrapText: null
+            displayFormat: null
+          - originalName: average_monthly_revenue
+            renameTo: null
+            size: 197
+            wrapText: null
+            displayFormat: null
+          - originalName: average_revenue
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: end_date
+            renameTo: null
+            size: 105
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: rental_id
+            renameTo: null
+            size: 103
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+          - originalName: start_date
+            renameTo: null
+            size: 110
+            wrapText: null
+            displayFormat: null
+          - originalName: total_months_rented
+            renameTo: null
+            size: 169
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: TEXT
+    cellId: ef18edd1-0777-45b6-8986-e5c9ebdc4238 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: I. What equipment class mix drives highest revenue by market?
+  - cellType: TEXT
+    cellId: 853e1769-c6b2-4e5d-98bf-a6be03dc6665 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: The sales mix method will be used to find the optimal product mix that results in the highest revenue, and the following metrics will be used as inputs in downstream variables.
+  - cellType: TEXT
+    cellId: f4dc38ea-ead5-4465-82e5-91b7180f8a01 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h3
+          children:
+            - text: Historical Performance
+  - cellType: SQL
+    cellId: dad4abac-f8ff-44c3-ba25-39080f949941 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Revenue by market and class
+    config:
+      source: |-
+        SELECT
+            market_name,
+            equipment_class,
+            ROUND(SUM(rental_revenue),2) AS total_revenue,
+            MIN(rental_date) AS start_date,
+            MAX(rental_date) AS end_date
+        FROM rentals
+        LEFT JOIN markets ON rentals.market_id = markets.market_id
+        LEFT JOIN assets ON rentals.asset_id = assets.asset_id
+        GROUP BY 1, 2
+        ORDER BY 1, 2 ASC;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: revenue_by_market_and_class
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: end_date
+            renameTo: null
+            size: 105
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+          - originalName: start_date
+            renameTo: null
+            size: 110
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: SQL
+    cellId: d16d7aa8-3b22-4734-8609-3a5fb6147592 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Revenue by market
+    config:
+      source: |-
+        SELECT
+            market_name,
+            ROUND(SUM(rental_revenue),2) AS total_revenue,
+        FROM rentals
+        LEFT JOIN markets ON rentals.market_id = markets.market_id
+        LEFT JOIN assets ON rentals.asset_id = assets.asset_id
+        GROUP BY 1
+        ORDER BY 1 ASC;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: revenue_by_market
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: BLOCK
+    cellId: 9cc79b56-1f84-43fa-9aee-666394afab80 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      blockConfig:
+        sqlCellId: 716bdceb-8cac-43e2-8d87-771cbd15066b
+        chartCellId: 6307b032-2638-4920-ae55-4698048a9d78
+        activeTab: display
+      cells:
+        - cellType: SQL
+          cellId: 716bdceb-8cac-43e2-8d87-771cbd15066b
+          cellLabel: Sales contribution
+          config:
+            source: |-
+              SELECT c.market_name, equipment_class, c.total_revenue, m.total_revenue as total_market_revenue,
+              ROUND((c.total_revenue / m.total_revenue ) * 100, 2) as sales_contribution
+              FROM revenue_by_market_and_class c
+              LEFT JOIN revenue_by_market m ON c.market_name = m.market_name 
+            dataFrameCell: true
+            dataConnectionId: null
+            resultVariableName: sales_contribution
+            useRichDisplay: true
+            sqlCellOutputType: PANDAS
+            useQueryMode: false
+            castDecimals: true
+            useNativeDates: true
+            outputFilteredResult: true
+            allowDuplicateColumns: false
+            tableDisplayConfig:
+              pageSize: 50
+              height: null
+              hideIcons: false
+              defaultColumnWidth: null
+              hideIndex: false
+              defaultSortColumn: null
+              defaultSortIndexColumn: null
+              defaultSortDirection: ASC
+              conditionalFormatting: null
+              calcs: null
+              filters: null
+              columnProperties:
+                - originalName: equipment_class
+                  renameTo: null
+                  size: 180
+                  wrapText: null
+                  displayFormat: null
+                - originalName: market_name
+                  renameTo: null
+                  size: 132
+                  wrapText: null
+                  displayFormat: null
+                - originalName: row-index-0
+                  renameTo: null
+                  size: 46
+                  wrapText: null
+                  displayFormat: null
+                - originalName: sales_contribution
+                  renameTo: null
+                  size: 216
+                  wrapText: null
+                  displayFormat: null
+                - originalName: total_market_revenue
+                  renameTo: null
+                  size: 240
+                  wrapText: null
+                  displayFormat: null
+                - originalName: total_revenue
+                  renameTo: null
+                  size: 156
+                  wrapText: null
+                  displayFormat: null
+              columnOrdering: null
+              customColumnOrdering: null
+              pinnedColumns: null
+              hiddenColumns: null
+              pinIndexColumns: false
+              showAggregations: false
+              columnAggregations: null
+        - cellType: CHARTV2
+          cellId: 6307b032-2638-4920-ae55-4698048a9d78
+          cellLabel: null
+          config:
+            height: null
+            chartSpec:
+              type: layered
+              layers:
+                - id: cc60666d-d642-4242-9a5c-0e37945c6807
+                  xAxis:
+                    type: string
+                    style:
+                      grid:
+                        style: solid
+                      ticks: {}
+                      labels: {}
+                    dataFrameColumn: market_name
+                  series:
+                    - id: c156f238-4c95-4864-9f2a-903a225f4a3b
+                      type: bar
+                      axis:
+                        type: number
+                        style:
+                          grid:
+                            style: solid
+                          ticks: {}
+                          labels: {}
+                        aggregate: sum
+                      dataFrameColumns:
+                        - total_revenue
+                      colorOrder: ascending
+                      color:
+                        type: static
+                      opacity:
+                        type: static
+                        value: 1
+                      tooltip:
+                        type: auto
+                      barWidth: 1
+                      orientation: vertical
+                      layout: grouped
+                  dataFrame: sales_contribution
+              settings:
+                legend:
+                  position: right
+                tooltip: true
+                selectionEnabled: false
+            chartSelection: {}
+            colorMappings: {}
+            resultVariable: filter_result
+            outputResult: false
+            displayType: CHART
+            displayTableConfig: null
+  - cellType: CHARTV2
+    cellId: 33c1e7a8-93d2-45dd-b300-79189af6e621 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Total Revenue
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: b7cf5b5f-fcb6-4a8c-b2c4-7c317889614d
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels:
+                  angle: 50
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: f2366187-4da1-494f-ba15-5565fe8a68cd
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Revenue $
+                  aggregate: sum
+                dataFrameColumns:
+                  - total_revenue
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: manual
+                  fields:
+                    - type: string
+                      dataFrameColumn: market_name
+                    - type: string
+                      dataFrameColumn: equipment_class
+                    - type: number
+                      dataFrameColumn: total_revenue
+                    - type: number
+                      dataFrameColumn: total_market_revenue
+                    - type: number
+                      dataFrameColumn: sales_contribution
+                barWidth: 1
+                orientation: vertical
+                layout: grouped
+            dataFrame: sales_contribution
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_3
+      outputResult: false
+      displayType: CHART
+      displayTableConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: sales_contribution
+            renameTo: null
+            size: 154
+            wrapText: null
+            displayFormat: null
+          - originalName: total_market_revenue
+            renameTo: null
+            size: 175
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: TEXT
+    cellId: fefe93a8-9987-43ff-b142-3d98fceffff8 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h3
+          children:
+            - text: Using Number of Assets in Each Market
+  - cellType: SQL
+    cellId: 90f687c0-b671-4636-94d1-b168105d540a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Total number of assets by market and class
+    config:
+      source: |-
+        SELECT
+            market_name,
+            equipment_class,
+            COUNT(DISTINCT asset_id) AS total_number_of_assets,
+            ROUND(SUM(total_revenue), 2) AS total_revenue,
+            CAST(SUM(oec) AS INT) AS oec
+        FROM asset_detail
+        GROUP BY 1, 2
+        ORDER BY 1, 2 ASC;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: total_number_of_assets_by_market_and_class
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: oec
+            renameTo: null
+            size: 90
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+          - originalName: total_number_of_assets
+            renameTo: null
+            size: 185
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CHARTV2
+    cellId: d6f10e55-3f1d-48b5-a650-6f3fd80ac536 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Total Number of Assets
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 4589b3c5-3fae-482d-ac5e-e4c88a2c007c
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels: {}
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: 03d8d430-5126-4e45-86f4-a872679f9e11
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Number of Assets
+                  aggregate: sum
+                dataFrameColumns:
+                  - total_number_of_assets
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                barWidth: 1
+                orientation: horizontal
+                layout: grouped
+            dataFrame: total_number_of_assets_by_market_and_class
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_4
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: SQL
+    cellId: c8bcf8bc-5c52-40c3-b587-fa394d48ad8a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Total number of assets by market
+    config:
+      source: |-
+        SELECT
+            market_name,
+            COUNT(DISTINCT asset_id) AS total_number_of_assets,
+            ROUND(SUM(total_revenue), 2) AS total_market_revenue,
+            CAST(SUM(oec) AS INT) AS market_oec
+        FROM asset_detail
+        GROUP BY 1
+        ORDER BY 1 ASC;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: total_number_of_assets_by_market
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: TEXT
+    cellId: 543b0de6-19d5-484e-b335-548c5620b0cc # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h3
+          children:
+            - text: "Sales Mix "
+  - cellType: TEXT
+    cellId: 3980e0af-7976-4293-805a-857d72f5940e # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Refers to the proportion of a single product's sales against total sales
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Used to determine which products are performing well
+  - cellType: TEXT
+    cellId: 7d892c9e-7526-4de9-a3fb-d1d891fd3d55 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h4
+          children:
+            - text: Sales Mix Ratio
+  - cellType: TEXT
+    cellId: 0fa8dc12-e9c2-4db4-a877-f80fa42c8f58 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - bold: true
+              text: Sales Mix Ratio
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Refers to the number of assets rented, not their impact on revenue
+  - cellType: TEXT
+    cellId: c5924e9d-322a-4e70-adb4-e88e930f0024 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: "Will be using sales mix ratio to find  sales mix contribution margin. "
+        - type: paragraph
+          children:
+            - bold: true
+              text: Sales Mix Ratio = Number of Assets per Equipment Class / Number of All Assets in the Same Market
+        - type: paragraph
+          children:
+            - bold: true
+              text: Sales Mix Contribution Margin = Sales Mix Ratio x Net Sales
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Since the data lacks all of product costs used to determine net revenue, we will use gross revenue as a substitute.
+        - type: p
+          children:
+            - text: ""
+        - type: p
+          children:
+            - bold: true
+              text: Optimal Number of Assets = Sales Mix Contribution Margin / Average Revenue per Asset
+  - cellType: TEXT
+    cellId: 1df59dac-76c4-4eac-a6ec-3643992ef342 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - bold: true
+              text: Sales Mix Contribution Margin
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Is the amount of actual dollars a company sees from the sales mix percentage
+  - cellType: SQL
+    cellId: 9ecdbc6c-fba5-4050-92fd-4c02b64f9be1 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Months Rented
+    config:
+      source: |-
+        WITH months_rented_by_market AS (
+          SELECT market_name, CAST(SUM(total_months_rented)AS INT) AS total_months_rented_market 
+          FROM rental_contract_details
+          GROUP BY 1
+        ),
+        months_rented_by_class AS (
+            SELECT market_name, equipment_class, CAST(SUM(total_months_rented) AS INT) AS total_months_rented_class
+            FROM rental_contract_details 
+            GROUP BY 1, 2
+        )
+        SELECT c.market_name, equipment_class, 
+        total_months_rented_class,
+        total_months_rented_market
+        FROM months_rented_by_class c
+        LEFT JOIN months_rented_by_market m ON c.market_name = m.market_name
+        ORDER BY 1, 2;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: months_rented
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: row-index-0
+            renameTo: null
+            size: 46
+            wrapText: null
+            displayFormat: null
+          - originalName: total_months_rented_class
+            renameTo: null
+            size: 203
+            wrapText: null
+            displayFormat: null
+          - originalName: total_months_rented_market
+            renameTo: null
+            size: 214
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: SQL
+    cellId: 3e0f44ef-348f-427f-9020-468171fbe654 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Sales mix ratio using number of assets rented
+    config:
+      source: |
+        SELECT
+            c.market_name,
+            c.equipment_class,
+            c.total_number_of_assets,
+            m.total_number_of_assets AS total_num_assets_by_market,
+            ROUND((c.total_number_of_assets / m.total_number_of_assets), 2) AS sales_mix_ratio,
+            ROUND((c.total_number_of_assets / m.total_number_of_assets) * 100, 2) AS sales_mix_ratio_percent,
+            total_revenue AS total_annual_class_revenue,
+            total_market_revenue AS total_annual_market_revenue,
+            ROUND(total_market_revenue * sales_mix_ratio, 2) AS sales_mix_contribution_margin,
+            ROUND(total_revenue / c.total_number_of_assets, 2) AS average_revenue_per_asset,
+            CAST(CEILING(sales_mix_contribution_margin / average_revenue_per_asset) AS INT) AS optimal_num_assets,
+            optimal_num_assets - c.total_number_of_assets AS asset_variance,
+            ROUND(((optimal_num_assets - c.total_number_of_assets) / c.total_number_of_assets) * 100, 2) AS asset_variance_percent,
+            ROUND(average_revenue_per_asset * optimal_num_assets, 2) AS revenue_goal,
+            ROUND(revenue_goal - total_revenue, 2) AS revenue_variance
+        FROM total_number_of_assets_by_market_and_class c
+        LEFT JOIN total_number_of_assets_by_market AS m ON c.market_name = m.market_name
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: sales_mix_ratio_using_number_of_assets_rented
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: asset_variance
+            renameTo: null
+            size: 135
+            wrapText: null
+            displayFormat: null
+          - originalName: average_revenue
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: optimal_num_assets
+            renameTo: null
+            size: 168
+            wrapText: null
+            displayFormat: null
+          - originalName: sales_mix_contribution_margin
+            renameTo: null
+            size: 225
+            wrapText: null
+            displayFormat: null
+          - originalName: sales_mix_ratio
+            renameTo: null
+            size: 141
+            wrapText: null
+            displayFormat: null
+          - originalName: sales_mix_ratio_percent
+            renameTo: null
+            size: 188
+            wrapText: null
+            displayFormat: null
+          - originalName: total_annual_class_revenue
+            renameTo: null
+            size: 206
+            wrapText: null
+            displayFormat: null
+          - originalName: total_annual_market_revenue
+            renameTo: null
+            size: 218
+            wrapText: null
+            displayFormat: null
+          - originalName: total_market_revenue
+            renameTo: null
+            size: 175
+            wrapText: null
+            displayFormat: null
+          - originalName: total_num_assets_by_market
+            renameTo: null
+            size: 215
+            wrapText: null
+            displayFormat: null
+          - originalName: total_number_of_assets
+            renameTo: null
+            size: 185
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: TEXT
+    cellId: 095b3978-25ce-4df3-afa6-8796515c95ca # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - bold: true
+              text: Average Revenue per Asset = Total Revenue / Total Number of Assets, per equipment class and market
+  - cellType: CHARTV2
+    cellId: 08789aac-78c6-4b8b-9d1f-d0269269f780 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Average Revenue per Asset
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 12a83841-f30a-4777-a1e6-abd24b61308b
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels:
+                  angle: 50
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: 78bae3fd-a608-4ffb-8ea8-2737eaa587a9
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Average Revenue $
+                dataFrameColumns:
+                  - average_revenue_per_asset
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                barWidth: 1
+                orientation: vertical
+                layout: grouped
+            dataFrame: sales_mix_ratio_using_number_of_assets_rented
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_5
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: TEXT
+    cellId: 6adda1c7-a9a1-4335-b8e7-f53191131e57 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h3
+          children:
+            - text: Optimal Product Mix
+  - cellType: TEXT
+    cellId: 85b3e742-3234-4549-a00f-dc6283d3ed75 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: The number of assets needed to meet the product mix that maximizes revenue.
+  - cellType: SQL
+    cellId: fafd3f93-eb12-4a0c-89f8-904330b331e9 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Market actual vs optimal
+    config:
+      source: |-
+        SELECT
+            market_name,
+            total_num_assets_by_market,
+            total_annual_market_revenue,
+            CAST(CEILING(SUM(optimal_num_assets)) AS INT) AS total_optimal_num_assets,
+            ROUND(SUM(revenue_goal), 2) AS market_revenue_goal,
+            ROUND(market_revenue_goal - total_annual_market_revenue, 2) AS total_revenue_variance,
+            ROUND(((market_revenue_goal - total_annual_market_revenue) / total_annual_market_revenue) * 100, 2) AS variance_percent
+        FROM sales_mix_ratio_using_number_of_assets_rented
+        GROUP BY 1, 2, 3
+        ORDER BY 1;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: market_actual_vs_optimal
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: market_revenue_goal
+            renameTo: null
+            size: 172
+            wrapText: null
+            displayFormat: null
+          - originalName: total_annual_market_revenue
+            renameTo: null
+            size: 218
+            wrapText: null
+            displayFormat: null
+          - originalName: total_market_revenue
+            renameTo: null
+            size: 175
+            wrapText: null
+            displayFormat: null
+          - originalName: total_num_assets_by_market
+            renameTo: null
+            size: 215
+            wrapText: null
+            displayFormat: null
+          - originalName: total_optimal_num_assets
+            renameTo: null
+            size: 199
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue_variance
+            renameTo: null
+            size: 181
+            wrapText: null
+            displayFormat: null
+          - originalName: variance_percent
+            renameTo: null
+            size: 165
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CHARTV2
+    cellId: 6bc98b34-c04d-47ea-9711-8bd59bdac89e # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Sales Mix Ratio
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 166bf5db-ea4e-4d3f-805d-47c21fd81cd5
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels: {}
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: a709fa7c-ec5f-44e8-bb3e-6d61dac4b916
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Sales Mix Ratio %
+                  aggregate: sum
+                dataFrameColumns:
+                  - sales_mix_ratio_percent
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                barWidth: 1
+                orientation: horizontal
+                layout: grouped
+            dataFrame: sales_mix_ratio_using_number_of_assets_rented
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_6
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: CHARTV2
+    cellId: 2b5dacb8-55a6-421b-b153-0479cc0661c5 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Sales Mix Contribution Margin
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 6e712de7-a685-44a4-a855-4ea537bbaafc
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels:
+                  angle: 50
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: fdae2b23-13f5-4721-b603-492126641db7
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Sales Mix Contribution Margin $
+                  aggregate: sum
+                dataFrameColumns:
+                  - sales_mix_contribution_margin
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                barWidth: 1
+                orientation: vertical
+                layout: grouped
+            dataFrame: sales_mix_ratio_using_number_of_assets_rented
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_7
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: CHARTV2
+    cellId: c5ef8ba5-f8fe-44d6-9fa7-2742ae152544 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Revenue Maximizing Product Mix
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: b7f73f49-1772-4c62-be7e-210c897b5bc5
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels: {}
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: 8c917a95-b43a-4140-b88e-31fbf4298a06
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Total Number of Assets
+                  aggregate: sum
+                dataFrameColumns:
+                  - optimal_num_assets
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: manual
+                  fields:
+                    - type: string
+                      dataFrameColumn: market_name
+                    - type: number
+                      dataFrameColumn: total_number_of_assets
+                    - type: string
+                      dataFrameColumn: equipment_class
+                    - type: number
+                      dataFrameColumn: asset_variance
+                    - type: number
+                      dataFrameColumn: asset_variance_percent
+                barWidth: 1
+                orientation: horizontal
+                layout: grouped
+            dataFrame: sales_mix_ratio_using_number_of_assets_rented
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_8
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: TEXT
+    cellId: 415c53e5-2fd6-4736-a978-5b073121548e # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: "From this product mix we can increase revenue by as much as 1% or $11k depending on the market. "
+  - cellType: CHARTV2
+    cellId: c669af90-74ce-41ac-b0fc-921427003af7 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Additional Revenue Resulting from Opitmal Product Mix
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: fb9a1c28-d489-41cc-9504-bafd4cefb5f8
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels:
+                  angle: 50
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: 300a06b3-503b-472d-b088-a5c6c95f98ef
+                type: area
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Additional Revenue $
+                  aggregate: sum
+                dataFrameColumns:
+                  - total_revenue_variance
+                colorOrder: ascending
+                color:
+                  type: static
+                opacity:
+                  type: static
+                  value: 1
+                tooltip:
+                  type: manual
+                  fields:
+                    - type: string
+                      dataFrameColumn: market_name
+                    - type: number
+                      dataFrameColumn: total_revenue_variance
+                    - type: number
+                      dataFrameColumn: variance_percent
+                    - type: number
+                      dataFrameColumn: market_revenue_goal
+                    - type: number
+                      dataFrameColumn: total_annual_market_revenue
+                line: true
+                point: false
+                normalize: false
+            dataFrame: market_actual_vs_optimal
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings: {}
+      resultVariable: filter_result_9
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: TEXT
+    cellId: a68ace63-f52c-41c7-ba19-07b4f1c6acaa # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: II. What individual equipment classes have the highest financial utilization? How do they drive overall revenue growth for a market?
+  - cellType: SQL
+    cellId: e8c84083-b0e9-4d36-9423-fe7b3324c763 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Financial utilization
+    config:
+      source: |-
+        SELECT *, 
+        total_revenue / oec AS financial_utilization, 
+        ROUND(total_revenue / oec * 100, 2) AS financial_utilization_percent
+        FROM total_number_of_assets_by_market_and_class;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: financial_utilization
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: financial_utilization
+            renameTo: null
+            size: 165
+            wrapText: null
+            displayFormat: null
+          - originalName: financial_utilization_percent
+            renameTo: null
+            size: 208
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: oec
+            renameTo: null
+            size: 90
+            wrapText: null
+            displayFormat: null
+          - originalName: total_number_of_assets
+            renameTo: null
+            size: 185
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: TEXT
+    cellId: 32540469-31dd-4a88-9fd8-d8bef009ca6a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: "In all, but one market, aerial equipment has the highest financial utilization. "
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Nashville is the only market where dirt equipment has the higher metric.
+  - cellType: CHARTV2
+    cellId: c814ff16-17e6-4a78-ad01-8acd0955ad36 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Financial Utilization
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 4c01ff71-78b9-4d84-ba91-21a66f9ad42e
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels:
+                  angle: 50
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: ac053abb-b539-492e-8921-377427c3806e
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Financial Utilization %
+                  aggregate: sum
+                dataFrameColumns:
+                  - financial_utilization_percent
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                barWidth: 1
+                orientation: vertical
+                layout: grouped
+            dataFrame: financial_utilization
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_10
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: TEXT
+    cellId: 052626ba-fe29-4cda-9188-12701b741fb9 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - bold: true
+              text: financial utilization = total annual revenue / acquisition cost
+  - cellType: TEXT
+    cellId: 2764d578-f786-4f50-9c01-7a1921af6bd1 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: The goal would be to have higher financial utilization.
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Since you cannot change acquisition cost the only way to accomplish increasing this metric would be to increase total annual revenue.
+  - cellType: TEXT
+    cellId: e3cdf56b-0ddf-4684-9ea9-047324f1c9e5 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: "Implies that these assets:"
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: have higher return on investment
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: are making the most money in comparison to other inventory
+  - cellType: TEXT
+    cellId: aca92c54-f7ca-400f-ba15-8445a6e38456 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: "These individual equipment classes drive revenue growth through one or more of the following:"
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: higher rental rates
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: more rental contracts
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: longer rental contracts
+        - type: paragraph
+          children:
+            - text: The last two also imply that the assets are in use more often.
+  - cellType: SQL
+    cellId: 8b40cf5f-08c9-41c9-902e-7a6c04948fad # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Rental rates
+    config:
+      source: |-
+        SELECT
+        market_name,
+        equipment_class,
+        ROUND(SUM(total_revenue)/SUM(total_months_rented), 2) AS average_monthly_rate ,
+        FROM rental_contract_details
+        GROUP BY 1, 2
+        ORDER BY 1, 2;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: rental_rates
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: average_monthly_rate
+            renameTo: null
+            size: 175
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CHARTV2
+    cellId: 174a41dc-1a0a-4442-bdc1-f86eaec07f1e # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Average Monthly Rate
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 0af79f44-9e34-4c18-8f2a-ee05a36aadab
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels:
+                  angle: 50
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: 640310c0-9002-4bab-b185-cdef327100bf
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Monthly Rate $
+                  aggregate: sum
+                dataFrameColumns:
+                  - average_monthly_rate
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                barWidth: 1
+                orientation: vertical
+                layout: grouped
+            dataFrame: rental_rates
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_13
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: CODE
+    cellId: 0d176c15-bb82-47b4-a949-0e8ac89ce879 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        rates_fu = pd.merge(financial_utilization, rental_rates, how='left', left_on=['market_name','equipment_class'], right_on = ['market_name','equipment_class'])
+        rates_fu = rates_fu[["market_name", "equipment_class", "financial_utilization_percent", "average_monthly_rate"]]
+  - cellType: TABLE_DISPLAY
+    cellId: 1dcb9a7d-f10d-4a28-a652-91decd90df82 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      dataFrameVariableName: rates_fu
+      resultVariable: table_result
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: average_monthly_rate
+            renameTo: null
+            size: 175
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: financial_utilization
+            renameTo: null
+            size: 165
+            wrapText: null
+            displayFormat: null
+          - originalName: financial_utilization_percent
+            renameTo: null
+            size: 208
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: oec
+            renameTo: null
+            size: 90
+            wrapText: null
+            displayFormat: null
+          - originalName: total_number_of_assets
+            renameTo: null
+            size: 185
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CHARTV2
+    cellId: fe769d80-e53b-4129-a177-593815cd593c # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Financial Utilization vs Average Monthly Rate
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: ead477e7-141e-4778-9f1d-838403d11ece
+            xAxis:
+              type: number
+              style:
+                grid:
+                  style: solid
+                ticks: {}
+                labels: {}
+              title: Average Monthly Rate $
+              dataFrameColumn: average_monthly_rate
+            series:
+              - id: ac539f02-98d8-42c1-8fcb-2d39ae5cf7d4
+                type: scatter
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Financial Utilization %
+                  aggregate: sum
+                dataFrameColumns:
+                  - financial_utilization_percent
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                filled: true
+                shape: circle
+                size: 100
+            dataFrame: rates_fu
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_14
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: CODE
+    cellId: d470d5db-80a3-4d46-9ffa-e6c2d61edcc7 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: rates_fu.corr()
+  - cellType: TEXT
+    cellId: d65bdcc7-7e3c-43ec-a0f6-77664964ceb8 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - bold: true
+              text: "          correlation coefficient: 0.22"
+  - cellType: SQL
+    cellId: 26beeef6-2258-48fd-a44b-27225c1bb5fd # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Number of rental contract
+    config:
+      source: |-
+        SELECT
+        market_name,
+        equipment_class,
+        COUNT(DISTINCT rental_id) as total_rental_contracts
+        FROM rental_contract_details
+        GROUP BY 1, 2
+        ORDER BY 1, 2;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: number_of_rental_contract
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: total_rental_contacts
+            renameTo: null
+            size: 171
+            wrapText: null
+            displayFormat: null
+          - originalName: total_rental_contracts
+            renameTo: null
+            size: 175
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CHARTV2
+    cellId: 2cad387b-6d62-46ae-a14d-dcc8b4c1e660 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Total Number of Rental Contracts
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: ca1d5f84-a2cb-4266-8f2f-eb1628f40d66
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels: {}
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: 5b746b62-5acf-4319-9a57-0c159d282aa9
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Number of Rental Contracts
+                  aggregate: sum
+                dataFrameColumns:
+                  - total_rental_contracts
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                barWidth: 1
+                orientation: horizontal
+                layout: grouped
+            dataFrame: number_of_rental_contract
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_12
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: CODE
+    cellId: f3b715fa-88eb-4cef-85ef-3c3dd0d18da6 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        contracts_fu = pd.merge(financial_utilization, number_of_rental_contract, how='left', left_on=['market_name','equipment_class'], right_on = ['market_name','equipment_class'])
+        contracts_fu = contracts_fu[["market_name", "equipment_class","financial_utilization_percent", "total_rental_contracts"]]
+  - cellType: TABLE_DISPLAY
+    cellId: 42f6d994-b4dc-4152-8b3f-3e83b917043f # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      dataFrameVariableName: contracts_fu
+      resultVariable: table_result_2
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: financial_utilization
+            renameTo: null
+            size: 165
+            wrapText: null
+            displayFormat: null
+          - originalName: financial_utilization_percent
+            renameTo: null
+            size: 208
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: oec
+            renameTo: null
+            size: 90
+            wrapText: null
+            displayFormat: null
+          - originalName: total_number_of_assets
+            renameTo: null
+            size: 185
+            wrapText: null
+            displayFormat: null
+          - originalName: total_rental_contacts
+            renameTo: null
+            size: 171
+            wrapText: null
+            displayFormat: null
+          - originalName: total_rental_contracts
+            renameTo: null
+            size: 175
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CHARTV2
+    cellId: d00fcc5b-207f-4c5e-b05b-a42356b54173 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Financial Utilization vs Total Rental Contracts
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 3f5d6a4a-af66-4f4f-be4f-711dedcde8ff
+            xAxis:
+              type: number
+              style:
+                grid:
+                  style: solid
+                ticks: {}
+                labels: {}
+              title: Total Rental Contracts
+              dataFrameColumn: total_rental_contracts
+            series:
+              - id: dbfaa522-37b4-4958-84d2-37f9a37fd016
+                type: scatter
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Financial Utilization %
+                  aggregate: sum
+                dataFrameColumns:
+                  - financial_utilization_percent
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                filled: true
+                shape: circle
+                size: 100
+            dataFrame: contracts_fu
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_15
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: CODE
+    cellId: 596ccfb1-121c-46a0-86d6-e0b18d7d6672 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: contracts_fu.corr()
+  - cellType: TEXT
+    cellId: 1f7f8d3c-a848-4eee-991c-bd8bfb4365af # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - bold: true
+              text: "         correlation coefficient: 0.65"
+  - cellType: SQL
+    cellId: 47cc0757-a665-4b58-ac5d-d3a39f2bc97f # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Rental contract length
+    config:
+      source: |-
+        SELECT
+        market_name,
+        equipment_class,
+        MAX(total_months_rented) AS max_num_months_rented,
+        ROUND(AVG(total_months_rented),2) AS avg_num_months_rented,
+        MIN(total_months_rented) AS min_num_months_rented
+        FROM rental_contract_details
+        GROUP BY 1, 2
+        ORDER BY 1, 2;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: rental_contract_length
+      useRichDisplay: true
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: avg_num_months_rented
+            renameTo: null
+            size: 194
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: max_num_months_rented
+            renameTo: null
+            size: 199
+            wrapText: null
+            displayFormat: null
+          - originalName: min_num_months_rented
+            renameTo: null
+            size: 196
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CHARTV2
+    cellId: 887b280f-0c6f-47bc-a3c7-e3cd91f8b100 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Average Number of Months Rented
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 0d970b5f-9ee8-4771-8aed-9e1e611aecca
+            xAxis:
+              type: string
+              style:
+                ticks: {}
+                labels: {}
+              title: Market
+              dataFrameColumn: market_name
+            series:
+              - id: a9844d4d-c9da-4f60-8e63-bb0c63693005
+                type: bar
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Number of Months
+                  aggregate: sum
+                dataFrameColumns:
+                  - avg_num_months_rented
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                barWidth: 1
+                orientation: horizontal
+                layout: grouped
+            dataFrame: rental_contract_length
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_11
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: CODE
+    cellId: 440b9562-768d-408e-8006-e624ffd93209 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Cperiod fu
+    config:
+      source: |-
+        cperiod_fu = pd.merge(financial_utilization, rental_contract_length, how='left', left_on=['market_name','equipment_class'], right_on = ['market_name','equipment_class'])
+        cperiod_fu = cperiod_fu[["market_name", "equipment_class", "financial_utilization_percent", "avg_num_months_rented"]]
+  - cellType: TABLE_DISPLAY
+    cellId: ac6c38c5-2f57-4f4c-a359-ae4b9f93c22a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      dataFrameVariableName: cperiod_fu
+      resultVariable: table_result_3
+      tableDisplayConfig:
+        pageSize: 50
+        height: null
+        hideIcons: false
+        defaultColumnWidth: null
+        hideIndex: false
+        defaultSortColumn: null
+        defaultSortIndexColumn: null
+        defaultSortDirection: ASC
+        conditionalFormatting: null
+        calcs: null
+        filters: null
+        columnProperties:
+          - originalName: avg_num_months_rented
+            renameTo: null
+            size: 194
+            wrapText: null
+            displayFormat: null
+          - originalName: equipment_class
+            renameTo: null
+            size: 147
+            wrapText: null
+            displayFormat: null
+          - originalName: financial_utilization
+            renameTo: null
+            size: 165
+            wrapText: null
+            displayFormat: null
+          - originalName: financial_utilization_percent
+            renameTo: null
+            size: 208
+            wrapText: null
+            displayFormat: null
+          - originalName: market_name
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+          - originalName: max_num_months_rented
+            renameTo: null
+            size: 199
+            wrapText: null
+            displayFormat: null
+          - originalName: oec
+            renameTo: null
+            size: 90
+            wrapText: null
+            displayFormat: null
+          - originalName: total_number_of_assets
+            renameTo: null
+            size: 185
+            wrapText: null
+            displayFormat: null
+          - originalName: total_revenue
+            renameTo: null
+            size: 130
+            wrapText: null
+            displayFormat: null
+        columnOrdering: null
+        customColumnOrdering: null
+        pinnedColumns: null
+        hiddenColumns: null
+        pinIndexColumns: false
+        showAggregations: false
+        columnAggregations: null
+  - cellType: CHARTV2
+    cellId: 04f33158-4e8d-4c6c-8a23-df4103f31b59 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Financial Utilization vs Average Months Rented
+    config:
+      height: null
+      chartSpec:
+        type: layered
+        layers:
+          - id: 85cf2364-fe6d-4604-9553-941b734b957c
+            xAxis:
+              type: number
+              style:
+                grid:
+                  style: solid
+                ticks: {}
+                labels: {}
+              title: Average Months Rented
+              dataFrameColumn: avg_num_months_rented
+            series:
+              - id: 52146098-c63f-4591-bac6-ff138acc2128
+                type: scatter
+                axis:
+                  type: number
+                  style:
+                    grid:
+                      style: solid
+                    ticks: {}
+                    labels: {}
+                  title: Financial Utilization %
+                  aggregate: sum
+                dataFrameColumns:
+                  - financial_utilization_percent
+                colorDataFrameColumn: equipment_class
+                colorOrder: ascending
+                color:
+                  type: series
+                  colorsBySeriesValues:
+                    Dirt: "#B279A2"
+                    Aerial: "#4C78A8"
+                opacity:
+                  type: static
+                  value: 0.83
+                tooltip:
+                  type: auto
+                filled: true
+                shape: circle
+                size: 100
+            dataFrame: cperiod_fu
+        settings:
+          legend:
+            position: right
+          tooltip: true
+          selectionEnabled: false
+      chartSelection: {}
+      colorMappings:
+        Dirt: "#F58518"
+        Aerial: "#4C78A8"
+      resultVariable: filter_result_16
+      outputResult: false
+      displayType: CHART
+      displayTableConfig: null
+  - cellType: CODE
+    cellId: a005021b-be17-4ff6-899c-329422b67638 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: cperiod_fu.corr()
+  - cellType: TEXT
+    cellId: 2c242125-f48d-4953-abdc-dce78dce512a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - bold: true
+              text: "         correlation coefficient: 0.72"
+  - cellType: TEXT
+    cellId: 377c3d81-f735-4f10-bd3b-3fde45e4be59 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: "Correlation analysis shows:"
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: A low correlation coefficient between financial utilization and average monthly rate. This means that if the average monthly rate increases it is not certain that there will be an increase in financial utilization, and suggests that the average monthly rate may not be a strong revenue driver after all.
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: "A higher correlation coefficient between financial utilization and both the total number of rental contracts and the average months rented, indicating that financial utilization increases when there are more rental contracts and longer rental contracts. "
+  - cellType: TEXT
+    cellId: f1778f0e-0827-4db2-b80d-5308e08eb32c # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: Potentially, financial utilization could help determine what assets you should be adding to the fleet, or which assets you should cycle out.
+  - cellType: SQL
+    cellId: c470a1d6-b701-436c-bdde-315479a28e27 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Fu correlations
+    config:
+      source: |-
+        SELECT 
+        a.asset_id,
+        a.market_name,
+        a.equipment_class,
+        MAX(a.total_revenue) AS total_revenue,
+        ROUND(MAX(a.total_revenue) / MAX(oec) * 100, 2) AS financial_utilization,
+        count(c.asset_id) AS number_of_contracts,
+        CAST(SUM(total_months_rented) AS INT) AS total_months_rented,
+        ROUND(MAX(a.total_revenue) / SUM(total_months_rented), 2) AS average_monthly_rate,
+        ROUND(SUM(total_months_rented)/number_of_contracts, 2) AS average_months_rented
+        FROM rental_contract_details c
+        LEFT JOIN asset_detail a on c.asset_id = a.asset_id 
+        GROUP BY 1, 2, 3;
+      dataFrameCell: true
+      dataConnectionId: null
+      resultVariableName: fu_correlations
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: CODE
+    cellId: ed79d00c-7ce3-4782-bcbf-1f6f26b07106 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: fu_correlations.corr()
+appLayout:
+  visibleMetadataFields:
+    - NAME
+    - DESCRIPTION
+    - AUTHOR
+    - LAST_EDITED
+    - CATEGORIES
+    - STATUS
+    - TABLE_OF_CONTENTS
+  fullWidth: true
+  tabs:
+    - name: Summary I
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: ef18edd1-0777-45b6-8986-e5c9ebdc4238
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 853e1769-c6b2-4e5d-98bf-a6be03dc6665
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: f4dc38ea-ead5-4465-82e5-91b7180f8a01
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 60
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 33c1e7a8-93d2-45dd-b300-79189af6e621
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+            - start: 60
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 08789aac-78c6-4b8b-9d1f-d0269269f780
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 15
+              end: 105
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: d6f10e55-3f1d-48b5-a650-6f3fd80ac536
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 543b0de6-19d5-484e-b335-548c5620b0cc
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3980e0af-7976-4293-805a-857d72f5940e
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 60
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 0fa8dc12-e9c2-4db4-a877-f80fa42c8f58
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 6bc98b34-c04d-47ea-9711-8bd59bdac89e
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+            - start: 60
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 1df59dac-76c4-4eac-a6ec-3643992ef342
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 2b5dacb8-55a6-421b-b153-0479cc0661c5
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 6adda1c7-a9a1-4335-b8e7-f53191131e57
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 85b3e742-3234-4549-a00f-dc6283d3ed75
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 15
+              end: 105
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: c5ef8ba5-f8fe-44d6-9fa7-2742ae152544
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 415c53e5-2fd6-4736-a978-5b073121548e
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 10
+              end: 110
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: c669af90-74ce-41ac-b0fc-921427003af7
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+    - name: Summary II
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a68ace63-f52c-41c7-ba19-07b4f1c6acaa
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 32540469-31dd-4a88-9fd8-d8bef009ca6a
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 10
+              end: 110
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: c814ff16-17e6-4a78-ad01-8acd0955ad36
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 052626ba-fe29-4cda-9188-12701b741fb9
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 2764d578-f786-4f50-9c01-7a1921af6bd1
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: e3cdf56b-0ddf-4684-9ea9-047324f1c9e5
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: aca92c54-f7ca-400f-ba15-8445a6e38456
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 40
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: fe769d80-e53b-4129-a177-593815cd593c
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: d65bdcc7-7e3c-43ec-a0f6-77664964ceb8
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+            - start: 40
+              end: 80
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: d00fcc5b-207f-4c5e-b05b-a42356b54173
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 1f7f8d3c-a848-4eee-991c-bd8bfb4365af
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+            - start: 80
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 04f33158-4e8d-4c6c-8a23-df4103f31b59
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 2c242125-f48d-4953-abdc-dce78dce512a
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 377c3d81-f735-4f10-bd3b-3fde45e4be59
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: f1778f0e-0827-4db2-b80d-5308e08eb32c
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+    - name: Data & Computation 
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 28b5bb77-c2f9-44bc-9813-b31b41ea4dc6
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 18c688d2-1fbf-4388-ad26-fad6605d7317
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: dd3ff613-e1b4-4618-a7f4-569490415a28
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a9d838a3-decb-4230-bc85-21de6c62e4cf
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 73f3563d-0a5c-4a5c-92c1-1118834d16b0
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 2947047f-835d-4e35-9185-b61baa1020a0
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 17e0c3cc-1005-414b-b533-b4b79270be9a
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 15b387d3-f226-4668-b90f-81fc8ce731fb
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 27c661cb-79f0-4c45-9361-17a8f9521a45
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: b9a0bb9e-c952-49f4-b60f-67ba715e51f6
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: c303fddd-7903-421f-bfb7-be23176c5b1b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3ee5f7b4-8763-4c35-8ae2-7c04e6ca0413
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 6192d8f8-5388-43e5-aa0a-a504ada13a54
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: ef18edd1-0777-45b6-8986-e5c9ebdc4238
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 853e1769-c6b2-4e5d-98bf-a6be03dc6665
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: f4dc38ea-ead5-4465-82e5-91b7180f8a01
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 716bdceb-8cac-43e2-8d87-771cbd15066b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 095b3978-25ce-4df3-afa6-8796515c95ca
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 543b0de6-19d5-484e-b335-548c5620b0cc
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 7d892c9e-7526-4de9-a3fb-d1d891fd3d55
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: c5924e9d-322a-4e70-adb4-e88e930f0024
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3e0f44ef-348f-427f-9020-468171fbe654
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 6adda1c7-a9a1-4335-b8e7-f53191131e57
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 85b3e742-3234-4549-a00f-dc6283d3ed75
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: fafd3f93-eb12-4a0c-89f8-904330b331e9
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a68ace63-f52c-41c7-ba19-07b4f1c6acaa
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: e8c84083-b0e9-4d36-9423-fe7b3324c763
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 052626ba-fe29-4cda-9188-12701b741fb9
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 2764d578-f786-4f50-9c01-7a1921af6bd1
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: e3cdf56b-0ddf-4684-9ea9-047324f1c9e5
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: aca92c54-f7ca-400f-ba15-8445a6e38456
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 1dcb9a7d-f10d-4a28-a652-91decd90df82
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 174a41dc-1a0a-4442-bdc1-f86eaec07f1e
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: d470d5db-80a3-4d46-9ffa-e6c2d61edcc7
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 42f6d994-b4dc-4152-8b3f-3e83b917043f
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 2cad387b-6d62-46ae-a14d-dcc8b4c1e660
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 596ccfb1-121c-46a0-86d6-e0b18d7d6672
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: ac6c38c5-2f57-4f4c-a359-ae4b9f93c22a
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 887b280f-0c6f-47bc-a3c7-e3cd91f8b100
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a005021b-be17-4ff6-899c-329422b67638
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+                  explorable: null
+sharedFilters: []
